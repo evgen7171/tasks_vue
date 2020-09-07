@@ -1,18 +1,20 @@
 <template>
   <div>
     <h1>List</h1>
-    <div class="row">
-      <div class="input-field col s6">
-        <select ref="select" v-model="filter">
-          <option value="" disabled selected>Choose your option</option>
-          <option value="active">Active</option>
-          <option value="outdated">Outdated</option>
-          <option value="completed">Completed</option>
-        </select>
-        <label>Status filter</label>
+    <form ref="form">
+      <div class="row">
+        <div class="input-field col s6">
+          <select ref="select" v-model="filter">
+            <option value="" disabled selected>Choose your option</option>
+            <option value="active">Active</option>
+            <option value="outdated">Outdated</option>
+            <option value="completed">Completed</option>
+          </select>
+          <label>Status filter</label>
+        </div>
       </div>
-    </div>
-    <button v-if="filter" class="btn btn-small red" @click="filter = null">Clear filter</button>
+      <button v-if="filter" class="btn btn-small red" @click="clearFilter">Clear filter</button>
+    </form>
     <hr>
     <table v-if="tasks.length" class="tasks_table">
       <thead>
@@ -69,6 +71,12 @@ export default {
   },
   mounted() {
     M.FormSelect.init(this.$refs.select)
+  },
+  methods: {
+    clearFilter() {
+      this.filter = null
+      this.$refs.form.reset()
+    }
   }
 }
 </script>
